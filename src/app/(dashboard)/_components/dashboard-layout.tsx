@@ -1,12 +1,22 @@
 "use client";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import * as Collapsible from "@radix-ui/react-collapsible";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import {
   Apple,
   Boxes,
   ChevronDown,
   ChevronRight,
+  LogOut,
   Menu,
   Ruler,
   Utensils,
@@ -51,7 +61,7 @@ const ROUTE_GROUPS: RouteGroupType[] = [
     items: [
       {
         href: "/client",
-        label: "مشتریان",
+        label: "مشتریان" ,
         icon: <Utensils className="mr-2 size-3" />,
       },
     ],
@@ -61,17 +71,17 @@ const ROUTE_GROUPS: RouteGroupType[] = [
 type RouteGroupProps = RouteGroupType;
 
 const RouteGroup = ({ group, items }: RouteGroupProps) => {
-  const [open, setopen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
   return (
-    <Collapsible.Root open={open} onOpenChange={setopen}>
+    <Collapsible.Root open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
         <Button
           className="text-foreground/80 flex w-full justify-between font-normal"
           variant="ghost"
         >
-            <span className="font-bold">   {group}</span>
-       
+          <span className="font-bold"> {group}</span>
+
           <motion.div animate={{ rotate: open ? 180 : 0 }}>
             <ChevronDown />
           </motion.div>
@@ -91,9 +101,9 @@ const RouteGroup = ({ group, items }: RouteGroupProps) => {
               variant="link"
               asChild
             >
-               <Link
+              <Link
                 href={item.href}
-                className={`flex items-center  rounded-md px-5 py-1 transition-all ${
+                className={`flex items-center rounded-md px-5 py-1 transition-all ${
                   pathname === item.href
                     ? "bg-foreground/10 hover:bg-foreground/5"
                     : "hover:bg-foreground/10"
@@ -113,28 +123,71 @@ const RouteGroup = ({ group, items }: RouteGroupProps) => {
 type DashboardLayoutProps = { children: ReactNode };
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const [open, setopen] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
-    <div className="bg-background fixed z-10 flex h-10 w-screen items-center justify-between border px-2">
-      <Collapsible.Root className="h-full "  open={open} onOpenChange={setopen}>
+    <div className="bg-background fixed z-10 flex h-1 w-screen items-center justify-between border px-2">
+      <Collapsible.Root className="h-full" open={open} onOpenChange={setOpen}>
         <Collapsible.Trigger className="m-2" asChild>
           <Button size="icon" variant="outline">
             <Menu />
+
           </Button>
         </Collapsible.Trigger>
       </Collapsible.Root>
-
+      <div className="flex">
+        {/* theme toggle */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex h-9 items-center gap-2 px-2"
+            >
+              <Avatar className="size-8">
+                <AvatarFallback>M</AvatarFallback>
+              </Avatar>
+              <span className="hidden md:inline">مدیر</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 text-right">
+            <DropdownMenuLabel>حساب کاربری</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <div className="flex flex-row-reverse items-center gap-3 px-2 py-1.5">
+              <Avatar className="size-8">
+                <AvatarFallback>M</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-sm font-medium">مدیر</p>
+                <p className="text-muted-foreground text-xs">
+                  masoud@gmail.com
+                </p>
+              </div>
+            </div>
+            <DropdownMenuSeparator />
+            <div className="flex justify-end">
+              <DropdownMenuItem
+                onClick={() => {
+                  //logout
+                }}
+                variant="destructive"
+              >
+                <span> خروج</span>
+                <LogOut className="size-4" />
+              </DropdownMenuItem>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <Collapsible.Root
         className="fixed top-0 right-0 z-20 h-dvh"
         open={open}
-        onOpenChange={setopen}
+        onOpenChange={setOpen}
       >
         <Collapsible.Content forceMount>
           <div
             className={`bg-background fixed top-0 right-0 h-screen w-64 border p-4 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
           >
             <div className="flex items-center justify-between">
-              <h1 className="font-semibold">ادمین دشبورد</h1>
+              <h1 className="font-semibold">مدیر داشبورد</h1>
               <Collapsible.Trigger asChild>
                 <Button size="icon" variant="outline">
                   <ChevronRight />
