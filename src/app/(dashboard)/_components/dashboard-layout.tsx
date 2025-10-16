@@ -1,4 +1,5 @@
 "use client";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,7 +62,7 @@ const ROUTE_GROUPS: RouteGroupType[] = [
     items: [
       {
         href: "/client",
-        label: "مشتریان" ,
+        label: "مشتریان",
         icon: <Utensils className="mr-2 size-3" />,
       },
     ],
@@ -125,57 +126,58 @@ type DashboardLayoutProps = { children: ReactNode };
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="bg-background fixed z-10 flex h-1 w-screen items-center justify-between border px-2">
-      <Collapsible.Root className="h-full" open={open} onOpenChange={setOpen}>
-        <Collapsible.Trigger className="m-2" asChild>
-          <Button size="icon" variant="outline">
-            <Menu />
-
-          </Button>
-        </Collapsible.Trigger>
-      </Collapsible.Root>
-      <div className="flex">
-        {/* theme toggle */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="flex h-9 items-center gap-2 px-2"
-            >
-              <Avatar className="size-8">
-                <AvatarFallback>M</AvatarFallback>
-              </Avatar>
-              <span className="hidden md:inline">مدیر</span>
+    <div className="flex">
+      <div className="bg-background fixed z-10 flex h-13 w-screen items-center justify-between border px-2">
+        <Collapsible.Root className="h-full" open={open} onOpenChange={setOpen}>
+          <Collapsible.Trigger className="m-2" asChild>
+            <Button size="icon" variant="outline">
+              <Menu />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 text-right">
-            <DropdownMenuLabel>حساب کاربری</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <div className="flex flex-row-reverse items-center gap-3 px-2 py-1.5">
-              <Avatar className="size-8">
-                <AvatarFallback>M</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm font-medium">مدیر</p>
-                <p className="text-muted-foreground text-xs">
-                  masoud@gmail.com
-                </p>
-              </div>
-            </div>
-            <DropdownMenuSeparator />
-            <div className="flex justify-end">
-              <DropdownMenuItem
-                onClick={() => {
-                  //logout
-                }}
-                variant="destructive"
+          </Collapsible.Trigger>
+        </Collapsible.Root>
+        <div className="flex">
+          <ThemeToggle />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex h-9 items-center gap-2 px-2"
               >
-                <span> خروج</span>
-                <LogOut className="size-4" />
-              </DropdownMenuItem>
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <Avatar className="size-8">
+                  <AvatarFallback>M</AvatarFallback>
+                </Avatar>
+                <span className="hidden md:inline">مدیر</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 text-right">
+              <DropdownMenuLabel>حساب کاربری</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <div className="flex flex-row-reverse items-center gap-3 px-2 py-1.5">
+                <Avatar className="size-8">
+                  <AvatarFallback>M</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-sm font-medium">مدیر</p>
+                  <p className="text-muted-foreground text-xs">
+                    masoud@gmail.com
+                  </p>
+                </div>
+              </div>
+              <DropdownMenuSeparator />
+              <div className="flex justify-end">
+                <DropdownMenuItem
+                  onClick={() => {
+                    //logout
+                  }}
+                  variant="destructive"
+                >
+                  <span> خروج</span>
+                  <LogOut className="size-4" />
+                </DropdownMenuItem>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <Collapsible.Root
         className="fixed top-0 right-0 z-20 h-dvh"
