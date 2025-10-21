@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "./ui/sonner";
+import { AlertDialogProvider } from "./ui/alert-dialog-provider";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const Providers = ({ children }: ProvidersType) => {
         disableTransitionOnChange
       >
         <Toaster />
+        <AlertDialogProvider />
         {children}
       </NextThemesProvider>
     </QueryClientProvider>
