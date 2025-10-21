@@ -6,6 +6,7 @@ import {
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
 } from "./alert-dialog";
 import { AlertDescription, AlertTitle } from "./alert";
 
@@ -29,26 +30,26 @@ const AlertDialogProvider = () => {
   };
 
   return (
-    <div className="text-right">
-      <AlertDialog open={alertOpen} onOpenChange={updateAlertOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+    <AlertDialog open={alertOpen} onOpenChange={updateAlertOpen}>
+      <AlertDialogContent >
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-right">
             <AlertTitle>{alertConfig.title || "تایید الزامی"}</AlertTitle>
-            <AlertDescription>
-              {alertConfig.description || "آیا شما از این اقدام مطمئن هستید؟"}
-            </AlertDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleCancel}>
-              {alertConfig.cancelLabel || "انصراف"}
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirm}>
-              {alertConfig.confirmLabel || "ادامه"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+          </AlertDialogTitle>
+          <AlertDescription>
+            {alertConfig.description || "آیا شما از این اقدام مطمئن هستید؟"}
+          </AlertDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={handleCancel}>
+            {alertConfig.cancelLabel || "انصراف"}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleConfirm}>
+            {alertConfig.confirmLabel || "ادامه"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
