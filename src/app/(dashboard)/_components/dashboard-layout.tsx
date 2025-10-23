@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { customErrorMap } from "@/lib/customErrorMap";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import {
@@ -26,6 +27,9 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
+import z from "zod";
+
+z.setErrorMap(customErrorMap)
 
 type RouteGroupType = {
   group: string;
