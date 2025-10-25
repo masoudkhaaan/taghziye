@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCategory } from "./use-mutations";
+import { deleteCategory } from "./categoryMutations";
 import { toast } from "sonner";
 
 const useDeleteCategory = () => {

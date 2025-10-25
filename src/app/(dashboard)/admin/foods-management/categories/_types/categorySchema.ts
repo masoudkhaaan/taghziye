@@ -4,12 +4,12 @@ import z from "zod";
 // const categorySchema = z.discriminatedUnion("action", [
 //   z.object({
 //     action: z.literal("create"),
-//     title: z.string().min(1).max(255),
+//     name: z.string().min(1).max(255),
 //   }),
 //   z.object({
 //     action: z.literal("update"),
 //     id: z.number().min(1),
-//     title: z.string().min(1).max(255),
+//     name: z.string().min(1).max(255),
 //   }),
 // ]);
 
@@ -19,7 +19,7 @@ import z from "zod";
 
 const categorySchema = z.intersection(
   z.object({
-    title: z.string().min(1).max(255),
+    name: z.string().min(1).max(255),
   }),
   z.discriminatedUnion("action", [
     z.object({ action: z.literal("create") }),
