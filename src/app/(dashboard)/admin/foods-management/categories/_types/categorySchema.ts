@@ -27,12 +27,11 @@ const categorySchema = z.intersection(
   ]),
 );
 
-
 type CategorySchema = z.infer<typeof categorySchema>;
 
 const categoryDefaultValue: CategorySchema = {
   action: "create",
-  title: "",
+  name: "",
 };
 
-export {type CategorySchema,categoryDefaultValue,categorySchema}
+export { type CategorySchema, categoryDefaultValue, categorySchema };

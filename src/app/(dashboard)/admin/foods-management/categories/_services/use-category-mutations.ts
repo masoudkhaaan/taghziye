@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCategory } from "./categoryMutations";
+import {
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from "./categoryMutations";
 import { toast } from "sonner";
 import { CategorySchema } from "../_types/categorySchema";
-import { createCategory, updateCategory } from "./categoryQueries";
 
 const useCreateCategory = () => {
   const queryClient = useQueryClient();
@@ -32,9 +35,7 @@ const useUpdateCategory = () => {
   });
 };
 
-
 const useDeleteCategory = () => {
-    
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -42,13 +43,10 @@ const useDeleteCategory = () => {
       deleteCategory(id);
     },
     onSuccess: () => {
-      toast.success("گالری با موفقیت حذف شد");
+      toast.success(" دسته بندی با موفقیت حذف شد");
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
 };
 
-
-
-
-export { useDeleteCategory,useUpdateCategory,useCreateCategory };
+export { useDeleteCategory, useUpdateCategory, useCreateCategory };
