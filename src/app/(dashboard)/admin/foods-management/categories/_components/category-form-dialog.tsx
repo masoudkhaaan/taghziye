@@ -1,3 +1,5 @@
+"use client";
+
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import {
   categoryDefaultValue,
@@ -92,7 +94,7 @@ const CategoryFormDialog = ({ smallTrigger }: CategoryFormDialogProps) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl">
+          <DialogTitle className="text-2xl text-right">
             {selectedCategoryId ? "ویرایش دسته بندی " : "ایجاد دسته بندی"}
           </DialogTitle>
         </DialogHeader>
@@ -100,7 +102,7 @@ const CategoryFormDialog = ({ smallTrigger }: CategoryFormDialogProps) => {
           <FormProvider {...form}>
             <ControlledInput<CategorySchema>
               name="name"
-              label="Name"
+              label="نام"
               placeholder="نام دسته بندی را وارد کنید"
             />
           </FormProvider>
