@@ -106,7 +106,8 @@ const getFood = async (id: number): Promise<FoodSchema | null> => {
   if (!res) return null;
 
   return {
-    action: "update",
+    action: "update" as const,
+    id,
     name: res.name,
     calories: toStringSafe(res.calories),
     carbohydrates: toStringSafe(res.carbohydrates),
