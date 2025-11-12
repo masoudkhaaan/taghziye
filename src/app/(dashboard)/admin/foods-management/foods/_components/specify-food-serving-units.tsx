@@ -44,7 +44,7 @@ const SpecifyFoodServingUnits = () => {
           {foodServingUnits.fields.map((field, index) => (
             <div
               key={field.id}
-              className="grid-cols[1fr_1fr_auto] grid items-end gap-3"
+              className="grid grid-cols-[1fr_1fr_auto] items-end gap-3"
             >
               <div className="col-span-1 flex items-end">
                 <ControlledSelect<FoodSchema>
@@ -54,7 +54,7 @@ const SpecifyFoodServingUnits = () => {
                     label: item.name,
                     value: item.id,
                   }))}
-                  placeholder="انتخاب واحد ..."
+                  placeholder="انتخاب واحد   "
                 />
                 <ServingUnitFormDialog smallTrigger />
               </div>

@@ -95,7 +95,7 @@ const FoodFormDialog = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl">
+          <DialogTitle className="text-2xl text-right">
             {selectedFoodId ? "تغییر غذا" : "ایجاد غذای جدید"}
           </DialogTitle>
         </DialogHeader>
