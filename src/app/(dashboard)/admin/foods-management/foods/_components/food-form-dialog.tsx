@@ -27,6 +27,7 @@ import { Plus } from "lucide-react";
 import { ControlledInput } from "@/components/ui/controlled/controlled-input";
 import { ControlledSelect } from "@/components/ui/controlled/controlled-select";
 import { CategoryFormDialog } from "../../categories/_components/category-form-dialog";
+import { SpecifyFoodServingUnits } from "./specify-food-serving-units";
 
 const FoodFormDialog = () => {
   const form = useForm<FoodSchema>({
@@ -85,7 +86,7 @@ const FoodFormDialog = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={foodDialogOpen} onOpenChange={handleDialogOpenChange}>
       <DialogTrigger asChild>
         <Button>
           غذای جدید
@@ -170,14 +171,20 @@ const FoodFormDialog = () => {
                   placeholder="گرم"
                 />
               </div>
-              {/*serving unites */}
+              <div className="col-span-2">
+                <SpecifyFoodServingUnits />
+              </div>
             </div>
           </FormProvider>
           <DialogFooter>
-            <Button type="submit" isLoading={isPending}> {!!selectedFoodId ? "تغییر" : "ایجاد"}</Button>
+            <Button type="submit" isLoading={isPending}>
+              {" "}
+              {!!selectedFoodId ? "تغییر" : "ایجاد"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
 };
+export { FoodFormDialog };
