@@ -1,3 +1,4 @@
+"use client";
 import {
   FormProvider,
   SubmitHandler,
@@ -31,11 +32,13 @@ import { FilterIcon } from "lucide-react";
 import { ControlledSelect } from "@/components/ui/controlled/controlled-select";
 import { ControlledSlider } from "@/components/ui/controlled/controlled-slider";
 
+
 const FoodFiltersDrawer = () => {
   const form = useForm<FoodFiltersSchema>({
     defaultValues: foodFiltersDefaultValues,
     resolver: zodResolver(foodFiltersSchema),
   });
+
 
   const {
     updateFoodFilters,
@@ -81,6 +84,7 @@ const FoodFiltersDrawer = () => {
       <FormProvider {...form}>
         <div className="flex gap-2">
           <ControlledInput<FoodFiltersSchema>
+            suppressHydrationWarning
             containerClassName="max-w-48"
             name="searchTerm"
             placeholder="جستجو سریع"
@@ -95,8 +99,8 @@ const FoodFiltersDrawer = () => {
         <form>
           <DrawerContent>
             <DrawerHeader className="text-right">
-              <DrawerTitle>فیلترها</DrawerTitle>
-              <DrawerDescription>
+              <DrawerTitle className="text-right">فیلترها</DrawerTitle>
+              <DrawerDescription className="text-right">
                 معیارهای جستجوی غذا را سفارشی کنید
               </DrawerDescription>
             </DrawerHeader>
