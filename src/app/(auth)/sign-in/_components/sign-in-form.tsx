@@ -39,7 +39,11 @@ const SignInForm = () => {
         </div>
 
         <div className="space-y-3">
-          <ControlledInput<SignInSchema> name="email" label="ایمیل" />
+          <ControlledInput<SignInSchema>
+            name="email"
+            label="ایمیل"
+            suppressHydrationWarning
+          />
           <ControlledInput<SignInSchema>
             name="password"
             label="رمز عبور"

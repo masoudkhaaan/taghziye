@@ -38,6 +38,7 @@ const SignUpForm = () => {
 
         <div className="space-y-3">
           <ControlledInput<SignUpSchema>
+            suppressHydrationWarning
             name="name"
             label="نام و نام خانوادگی"
           />

@@ -107,6 +107,7 @@ const FoodFormDialog = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-1">
                 <ControlledInput<FoodSchema>
+                  suppressHydrationWarning
                   name="name"
                   label="نام"
                   placeholder="نام غذا را وارد کنید"
