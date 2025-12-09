@@ -23,7 +23,11 @@ const toNumberSafe = (
 
 const SALT_ROUNDS = 10;
 const hashPassword = async (password: string) => {
- return await bcrypt.hash(password, SALT_ROUNDS);
+  return await bcrypt.hash(password, SALT_ROUNDS);
 };
 
-export { cn, toStringSafe, toNumberSafe, hashPassword };
+const comparePassword = async (password: string, hashPassword: string) => {
+  return await bcrypt.compare(password, hashPassword);
+};
+
+export { cn, toStringSafe, toNumberSafe, hashPassword,comparePassword };
