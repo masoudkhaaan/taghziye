@@ -5,12 +5,28 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "./ui/sonner";
 import { AlertDialogProvider } from "./ui/alert-dialog-provider";
+import { toast } from "sonner";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    mutations: {
+      onError: (e) => {
+        if (e.message === "NEXT_REDIRECT") return;
+        toast.error(e.message || "خطایی رخ داد.");
+      },
+      onSuccess: () => {
+        toast.success("عملیات با موفقیت انجام شد.");
+      },
+    },
+  },
+});
+
 
 type ProvidersType = {
   children: ReactNode;
 };
+
+
 
 const Providers = ({ children }: ProvidersType) => {
   return (
