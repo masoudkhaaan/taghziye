@@ -42,16 +42,18 @@ const SignUpForm = () => {
             name="name"
             label="نام و نام خانوادگی"
           />
-          <ControlledInput<SignUpSchema> name="email" label="ایمیل" />
+          <ControlledInput<SignUpSchema> name="email" label="ایمیل" suppressHydrationWarning />
           <ControlledInput<SignUpSchema>
             name="password"
             label="رمز عبور"
             type="password"
+            suppressHydrationWarning
           />
           <ControlledInput<SignUpSchema>
             name="confirmPassword"
             label="تکرار رمز عبور"
             type="password"
+            suppressHydrationWarning
           />
         </div>
 

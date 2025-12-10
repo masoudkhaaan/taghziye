@@ -48,6 +48,7 @@ const SignInForm = () => {
             name="password"
             label="رمز عبور"
             type="password"
+            suppressHydrationWarning
           />
         </div>
 
