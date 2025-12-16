@@ -1,4 +1,5 @@
 "use client";
+import { useSignOut } from "@/app/(auth)/sign-in/_services/use-sign-in-mutations";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -26,10 +27,12 @@ import {
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Session } from "next-auth";
 import { ReactNode, useState } from "react";
 import z from "zod";
+import { Role } from "$/generated/prisma";
 
-z.setErrorMap(customErrorMap)
+z.setErrorMap(customErrorMap);
 
 type RouteGroupType = {
   group: string;
@@ -125,10 +128,24 @@ const RouteGroup = ({ group, items }: RouteGroupProps) => {
   );
 };
 
-type DashboardLayoutProps = { children: ReactNode };
+type DashboardLayoutProps = { children: ReactNode; session: Session };
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = ({ children, session }: DashboardLayoutProps) => {
   const [open, setOpen] = useState(false);
+  const signOutMutation = useSignOut();
+  const userRole = session.user.role;
+
+  const filteredRouteGroups = ROUTE_GROUPS.filter((group) => {
+    if (userRole === Role.ADMIN) {
+      return group.group === "مدیریت غذاها";
+    } else {
+      return group.group === "مدیریت مشتریان";
+    }
+  });
+
+  const handleLogout = () => {
+    signOutMutation.mutate();
+  };
   return (
     <div className="flex">
       <div className="bg-background fixed z-10 flex h-13 w-screen items-center justify-between border px-2">
@@ -141,46 +158,46 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         </Collapsible.Root>
         <div className="flex">
           <ThemeToggle />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-9 items-center gap-2 px-2"
-              >
-                <Avatar className="size-8">
-                  <AvatarFallback>M</AvatarFallback>
-                </Avatar>
-                <span className="hidden md:inline">مدیر</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 text-right">
-              <DropdownMenuLabel>حساب کاربری</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <div className="flex flex-row-reverse items-center gap-3 px-2 py-1.5">
-                <Avatar className="size-8">
-                  <AvatarFallback>M</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-medium">مدیر</p>
-                  <p className="text-muted-foreground text-xs">
-                    masoud@gmail.com
-                  </p>
-                </div>
-              </div>
-              <DropdownMenuSeparator />
-              <div className="flex justify-end">
-                <DropdownMenuItem
-                  onClick={() => {
-                    //logout
-                  }}
-                  variant="destructive"
+          {session && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="flex h-9 items-center gap-2 px-2"
                 >
-                  <span> خروج</span>
-                  <LogOut className="size-4" />
-                </DropdownMenuItem>
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <Avatar className="size-8">
+                    <AvatarFallback>{session.user.name?.[0]}</AvatarFallback>
+                  </Avatar>
+                  <span className="hidden md:inline">{session.user.name}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 text-right">
+                <DropdownMenuLabel>حساب کاربری</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <div className="flex flex-row-reverse items-center gap-3 px-2 py-1.5">
+                  <Avatar className="size-8">
+                    <AvatarFallback>{session.user.name?.[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-medium">{session.user.name}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {session.user.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <div className="flex justify-end">
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    variant="destructive"
+                  >
+                    <span> خروج</span>
+                    <LogOut className="size-4" />
+                  </DropdownMenuItem>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
       <Collapsible.Root
@@ -202,7 +219,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </div>
             <Separator className="my-2" />
             <div className="mt-4">
-              {ROUTE_GROUPS.map((routeGroup) => (
+              {filteredRouteGroups.map((routeGroup) => (
                 <RouteGroup {...routeGroup} key={routeGroup.group} />
               ))}
             </div>
