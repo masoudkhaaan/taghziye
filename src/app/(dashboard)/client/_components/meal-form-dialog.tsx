@@ -116,7 +116,7 @@ const MealFormDialog = ({ smallTrigger, session }: MealFormDialogProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl">
+          <DialogTitle className="text-2xl text-right">
             {selectedMealId ? "ویرایش وعده غذایی" : "ایجاد وعده غذایی جدید"}
           </DialogTitle>
         </DialogHeader>

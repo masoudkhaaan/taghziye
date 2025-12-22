@@ -9,7 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { alert } from "@/lib/use-global-store";
 
-import { format } from "date-fns";
+import { format } from "date-fns-jalali";
+import { faIR } from "date-fns-jalali/locale";
+
 import {
   CalendarX,
   Edit,
@@ -27,25 +29,26 @@ const MealCards = () => {
   const mealsQuery = useMeals();
   const deleteMealMutation = useDeleteMeal();
 
-  const nutritionTotals =
-    mealsQuery.data?.reduce(
-      (totals, meal) => {
-        meal.mealFoods.forEach((mealFood) => {
-          const multiplier = mealFood.amount || 1;
-          totals.calories += (mealFood.food.calories || 0) * multiplier;
-          totals.protein += (mealFood.food.protein || 0) * multiplier;
-          totals.carbs += (mealFood.food.carbohydrates || 0) * multiplier;
-          totals.fat += (mealFood.food.fat || 0) * multiplier;
-          totals.sugar += (mealFood.food.sugar || 0) * multiplier;
-          totals.fiber += (mealFood.food.fiber || 0) * multiplier;
-        });
-        return totals;
-      },
-      { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, fiber: 0 },
-    ) || { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, fiber: 0 };
+  const nutritionTotals = mealsQuery.data?.reduce(
+    (totals, meal) => {
+      meal.mealFoods.forEach((mealFood) => {
+        const multiplier = mealFood.amount || 1;
+        totals.calories += (mealFood.food.calories || 0) * multiplier;
+        totals.protein += (mealFood.food.protein || 0) * multiplier;
+        totals.carbs += (mealFood.food.carbohydrates || 0) * multiplier;
+        totals.fat += (mealFood.food.fat || 0) * multiplier;
+        totals.sugar += (mealFood.food.sugar || 0) * multiplier;
+        totals.fiber += (mealFood.food.fiber || 0) * multiplier;
+      });
+      return totals;
+    },
+    { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, fiber: 0 },
+  ) || { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0, fiber: 0 };
 
   const displayDate = mealFilters.dateTime
-    ? format(new Date(mealFilters.dateTime), "EEEE, MMMM d, yyyy")
+    ? format(new Date(mealFilters.dateTime), "EEEE d MMMM yyyy", {
+        locale: faIR,
+      })
     : "امروز";
 
   if (mealsQuery.isLoading) {
@@ -106,15 +109,21 @@ const MealCards = () => {
               <div className="grid grid-cols-3 gap-2">
                 <div>
                   <p className="text-muted-foreground text-xs">پروتئین</p>
-                  <p className="font-medium">{nutritionTotals.protein} {"  "}  گرم</p>
+                  <p className="font-medium">
+                    {nutritionTotals.protein} {"  "} گرم
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground text-xs">کربوهیدرات</p>
-                  <p className="font-medium">{nutritionTotals.carbs} {"  "}  گرم</p>
+                  <p className="font-medium">
+                    {nutritionTotals.carbs} {"  "} گرم
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground text-xs">چربی</p>
-                  <p className="font-medium">{nutritionTotals.fat} {"  "}  گرم</p>
+                  <p className="font-medium">
+                    {nutritionTotals.fat} {"  "} گرم
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -149,10 +158,9 @@ const MealCards = () => {
                   <span className="text-sm">آخرین وعده</span>
                   <span className="font-medium">
                     {mealsQuery.data?.length
-                      ? format(
-                          new Date(mealsQuery.data[0].dateTime),
-                          "HH:mm",
-                        )
+                      ? format(new Date(mealsQuery.data[0].dateTime), "HH:mm", {
+                          locale: faIR,
+                        })
                       : "—"}
                   </span>
                 </div>
@@ -172,11 +180,15 @@ const MealCards = () => {
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 <div>
                   <p className="text-muted-foreground text-xs">فیبر</p>
-                  <p className="font-medium">{nutritionTotals.fiber} {"  "}  گرم</p>
+                  <p className="font-medium">
+                    {nutritionTotals.fiber} {"  "} گرم
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground text-xs">قند</p>
-                  <p className="font-medium">{nutritionTotals.sugar}  {"  "}  گرم</p>
+                  <p className="font-medium">
+                    {nutritionTotals.sugar} {"  "} گرم
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -203,7 +215,9 @@ const MealCards = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="font-medium">
-                      {format(new Date(meal.dateTime), "PPp")}
+                      {format(new Date(meal.dateTime), "yyyy/MM/dd - HH:mm", {
+                        locale: faIR,
+                      })}
                     </p>
                     <Badge variant="outline" className="mt-1">
                       {totalCalories} کیلوکالری
@@ -228,10 +242,8 @@ const MealCards = () => {
                       onClick={() => {
                         alert({
                           title: "حذف وعده",
-                          description:
-                            "آیا از حذف این وعده غذایی مطمئن هستید؟",
-                          onConfirm: () =>
-                            deleteMealMutation.mutate(meal.id),
+                          description: "آیا از حذف این وعده غذایی مطمئن هستید؟",
+                          onConfirm: () => deleteMealMutation.mutate(meal.id),
                         });
                       }}
                     >
@@ -247,9 +259,7 @@ const MealCards = () => {
                     <Utensils className="text-primary size-4" />
                     <p className="text-foreground/70 text-sm font-medium">
                       {meal.mealFoods.length}{" "}
-                      {meal.mealFoods.length === 1
-                        ? "قلم"
-                        : "قلم غذایی"}
+                      {meal.mealFoods.length === 1 ? "قلم" : "قلم غذایی"}
                     </p>
                   </div>
 
@@ -265,9 +275,7 @@ const MealCards = () => {
                           className="bg-muted/40 rounded-md p-5"
                         >
                           <div className="flex items-start justify-between">
-                            <p className="font-medium">
-                              {mealFood.food.name}
-                            </p>
+                            <p className="font-medium">{mealFood.food.name}</p>
                             <Badge variant="secondary">
                               {(mealFood.food.calories ?? 0) *
                                 (mealFood.amount || 1)}{" "}
@@ -275,7 +283,7 @@ const MealCards = () => {
                             </Badge>
                           </div>
 
-                          <div className="text-foreground/70  mt-2 flex flex-col  justify-between text-sm">
+                          <div className="text-foreground/70 mt-2 flex flex-col justify-between text-sm">
                             <div>
                               <span>مقدار مصرف: </span>
                               <span className="font-medium">
@@ -286,7 +294,7 @@ const MealCards = () => {
                               </span>
                             </div>
 
-                            <div className="space-x-2 text-xs flex mt-2">
+                            <div className="mt-2 flex space-x-2 text-xs">
                               <span>پ: {mealFood.food.protein}g</span>
                               <span>ک: {mealFood.food.carbohydrates}g</span>
                               <span>چ: {mealFood.food.fat}g</span>

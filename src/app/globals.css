@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html,
+body,
+:root {
+  height: 100%;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -117,4 +123,117 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+@layer components {
+  .my-rmdp {
+    background-color: #0f172b !important;
+    color: #fff !important;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .my-rmdp .rmdp-week .rmdp-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .my-rmdp .rmdp-week-day,
+  .my-rmdp .rmdp-day {
+    background-color: transparent !important;
+    color: #fff !important;
+    padding: clamp(2px, 0.5vw, 6px) clamp(3px, 1vw, 8px);
+    text-align: center;
+    min-width: clamp(28px, 8vw, 48px);
+    white-space: nowrap;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    border-radius: 4px;
+  }
+
+  /* متن داخل span یا button یا هر عنصر داخلی */
+  .my-rmdp .rmdp-week-day span,
+  .my-rmdp .rmdp-day span,
+  .my-rmdp .rmdp-day button,
+  .my-rmdp .rmdp-week-day button {
+    color: #fff !important;
+  }
+
+  /* حالت انتخاب‌شده */
+  .my-rmdp .rmdp-day.selected {
+    background-color: #1e293b !important;
+    color: #fff !important;
+  }
+
+  /* حالت هاور */
+  .my-rmdp .rmdp-day:hover {
+    background-color: #1c2a3a !important;
+    color: #fff !important;
+  }
+
+  /* تنظیمات سال */
+  .my-rmdp .rmdp-year,
+  .my-rmdp .rmdp-year-picker,
+  .my-rmdp .rmdp-year-picker span,
+  .my-rmdp .rmdp-year-picker button {
+    background-color: #1e293b !important;
+    color: #fff !important;
+    font-size: 0.9rem;
+    padding: 4px 6px;
+    border-radius: 4px;
+  }
+
+  /* حالت انتخاب‌شده برای سال */
+  .my-rmdp .rmdp-year.selected {
+    background-color: #1e293b !important;
+    color: #fff !important;
+  }
+
+  /* حالت هاور برای سال */
+  .my-rmdp .rmdp-year:hover {
+    background-color: #1c2a3a !important;
+    color: #fff !important;
+  }
+}
+/* هدر بالای تقویم */
+.my-rmdp .rmdp-header {
+  background-color: transparent !important;
+  color: #fff !important;
+  display: flex;
+  justify-content: center;   /* وسط‌چین کردن */
+  align-items: center;
+  padding: 6px 8px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* مقدارهای ماه و سال داخل هدر */
+.my-rmdp .rmdp-header-values {
+  background-color: transparent !important;
+  color: #fff !important;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.my-rmdp .rmdp-header-values > span,
+.my-rmdp .rmdp-header-values > button {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+/* دکمه‌های ناوبری (فلش‌ها) */
+.my-rmdp .rmdp-header > button {
+  background-color: transparent !important;
+  color: #fff !important;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.my-rmdp .rmdp-header > button:hover {
+  background-color: #1c2a3a !important;
+}
+
+/* فلش‌ها */
+.my-rmdp .rmdp-header .rmdp-arrow {
+  color: #fff !important;
 }
