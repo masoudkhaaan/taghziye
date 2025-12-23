@@ -32,7 +32,7 @@ export default function RootLayout({
       antialiased 
     `}
   >
-    <div className="container mx-auto px-2 sm:px-4 md:px-6">
+    <div>
       <Providers>{children}</Providers>
     </div>
   </body>
