@@ -1,8 +1,10 @@
-
 import { SignInSchema } from "@/app/(auth)/sign-in/_types/signInSchema";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { signIn, signOut } from "./sign-in-mutations";
+import { signIn } from "./sign-in-mutations";
+
+import { signOut as nextAuthSignOut } from "next-auth/react";
+
 
 const useSignIn = () => {
   return useMutation({
@@ -16,7 +18,9 @@ const useSignOut = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: signOut,
+    mutationFn: async () => {
+      await nextAuthSignOut({ redirect: false });
+    },
     onSuccess: () => {
       router.push("/sign-in");
     },
